@@ -6,41 +6,51 @@ var theBrowser = (function () {
 	"use strict";
 
 	var quickMatch,
-		self = {},
-		agent = navigator.userAgent,
-		matches = agent.match(/(opera|chrome|safari|firefox|msie|trident)[\/ ]*([\d.]+)/i) || [];
+	    self = {},
+	    agent = navigator.userAgent,
+	    matches = agent.match(/(opera|chrome|safari|firefox|msie|trident)[\/ ]*([\d.]+)/i) || [];
 
 
 	self.is = function () {
-		var browser, browserTable, i, doesMatch;
+		var browserTable, browserName, browserData, doesMatch;
 
-		if (arguments[0] instanceof Array) {
-			browserTable = arguments[0];
-			for (i=0; i<browserTable.length; i++) {
-				if (self.is(browserTable[i])) return true;
-			}
+		if (arguments[0] instanceof Array) return self.is._byBrowserTable(arguments[0]);
+		else if (typeof arguments[0] == 'string') return self.is._byBrowserName(arguments[0]);
+		else if (typeof arguments[0] == 'object') return self.is._byBrowserData(arguments[0]);
 
-			return false;
-		}
-
-		else if (typeof arguments[0] == 'object') {
-			browser = arguments[0];
-			doesMatch = true;
-
-			if (typeof browser.name !== 'string') doesMatch = false;
-			else if (self.name.toLowerCase() !== browser.name.toLowerCase()) doesMatch = false;
-			else if (typeof browser.minVersion == 'number' &&
-			         parseInt(self.version) < browser.minVersion) doesMatch = false;
-			else if (typeof browser.maxVersion == 'number' &&
-			         parseInt(self.version) > browser.maxVersion) doesMatch = false;
-			else if (typeof browser.version == 'number' &&
-			         parseInt(self.version) !== browser.version) doesMatch = false;
-			else if (typeof browser.Version == 'string' &&
-			         self.version !== browser.version) doesMatch = false;
-
-			return doesMatch;
-		}
+		return false;
 	};
+
+	self.is._byBrowserTable = function (browserTable) {
+		for (var i=0; i<browserTable.length; i++) {
+			if (self.is(browserTable[i])) return true;
+		}
+
+		return false;
+	};
+
+	self.is._byBrowserName = function (browserName) {
+		if (self.name.toLowerCase() === browserName.toLowerCase()) return true;
+		else return false;
+	};
+
+	self.is._byBrowserData = function (browserData) {
+		var doesMatch = true;
+
+		if (typeof browserData.name !== 'string') doesMatch = false;
+		else if (self.name.toLowerCase() !== browserData.name.toLowerCase()) doesMatch = false;
+		else if (typeof browserData.minVersion == 'number' &&
+		         parseInt(self.version) < browserData.minVersion) doesMatch = false;
+		else if (typeof browserData.maxVersion == 'number' &&
+		         parseInt(self.version) > browserData.maxVersion) doesMatch = false;
+		else if (typeof browserData.version == 'number' &&
+		         parseInt(self.version) !== browserData.version) doesMatch = false;
+		else if (typeof browserData.Version == 'string' &&
+		         self.version !== browserData.version) doesMatch = false;
+
+		return doesMatch;
+	};
+
 
 
 	// Detect new IE versions
