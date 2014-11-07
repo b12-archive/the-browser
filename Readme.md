@@ -16,7 +16,7 @@ Usage
 - Download the script. You can use [bower]:
 
 ```
-bower install the-browser
+bower install git@git.sb12.de:js/lib/the-browser.git
 ```
 
 - Include the script before yours:
