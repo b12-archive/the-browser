@@ -1,0 +1,18 @@
+{ "name": "the-browser"
+, "version": "0.1.0"
+, "contributors":
+  [ { "name": "Tomek Wiszniewski"
+    , "email": "<t.wiszniewski@studio-b12.de>"
+    }
+  ]
+, "copyright": "Studio B12 GmbH 2014"
+
+, "private": true
+, "repository":
+  { "type": "git"
+  , "url": "git@git.sb12.de:js/lib/the-browser.git"
+  }
+
+, "main": "dist/the-browser.js"
+, "dependencies": {}
+}
