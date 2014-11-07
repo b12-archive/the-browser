@@ -1,5 +1,5 @@
 { "name": "the-browser"
-, "version": "0.1.0"
+, "version": "0.3.0"
 , "contributors":
   [ { "name": "Tomek Wiszniewski"
     , "email": "<t.wiszniewski@studio-b12.de>"
