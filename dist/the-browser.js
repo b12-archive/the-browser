@@ -1,101 +1,146 @@
-/**
- * @credits to http://stackoverflow.com/a/2401861/2816199
+/*!
+ * the-browser.js
+ * https://github.com/studio-b12/the-browser
+ *
+ * Copyright 2014 by Studio B12 GmbH
+ * Released under the MIT license
+ * https://github.com/studio-b12/the-browser/blob/master/License.md
  */
 
-var theBrowser = (function () {
-	"use strict";
 
-	var quickMatch,
-	    self = {},
-	    agent = navigator.userAgent,
-	    matches = agent.match(/(opera|chrome|safari|firefox|msie|trident)[\/ ]*([\d.]+)/i) || [];
+var theBrowser = (function (navigator) { 'use strict';
+    var is, _init;
+    var self = {};
 
 
-	self.is = function () {
-		var browserTable, browserName, browserData, doesMatch;
+    self.is = is = function theBrowser_is () {
+        /**
+         * @function theBrowser.is
+         * @param {Array} browserTable
+         * @returns {Boolean}
+         */
+        if (arguments[0] && arguments[0] instanceof Array) {
+            return is._byBrowserTable(arguments[0]);
+            }
 
-		if (arguments[0] instanceof Array) return self.is._byBrowserTable(arguments[0]);
-		else if (typeof arguments[0] == 'string') return self.is._byBrowserName(arguments[0]);
-		else if (typeof arguments[0] == 'object') return self.is._byBrowserData(arguments[0]);
+        /**
+         * @function theBrowser.is
+         * @param {String} browserName
+         * @returns {Boolean}
+         */
+        else if (typeof arguments[0] == 'string') {
+            return is._byBrowserName(arguments[0]);
+            }
 
-		return false;
-	};
+        /**
+         * @function theBrowser.is
+         * @param {Object} browserData
+         * @returns {Boolean}
+         */
+        else if (typeof arguments[0] == 'object') {
+            return is._byBrowserData(arguments[0]);
+            }
 
-	self.is._byBrowserTable = function (browserTable) {
-		for (var i=0; i<browserTable.length; i++) {
-			if (self.is(browserTable[i])) return true;
-		}
+        return false;
+        };
 
-		return false;
-	};
+    is._byBrowserTable = function theBrowser_is_byBrowserTable (browserTable) {
+        var browserData;
+        while ((browserData = browserTable.pop())) {
+            if (self.is(browserData)) return true;
+            }
 
-	self.is._byBrowserName = function (browserName) {
-		if (self.name.toLowerCase() === browserName.toLowerCase()) return true;
-		else return false;
-	};
+        return false;
+        };
 
-	self.is._byBrowserData = function (browserData) {
-		var doesMatch = true;
+    is._byBrowserName = function theBrowser_is_byBrowserName (browserName) {
+        if (browserName.toLowerCase() === self.name.toLowerCase()) return true;
+        else return false;
+        };
 
-		if (typeof browserData.name !== 'string') doesMatch = false;
-		else if (self.name.toLowerCase() !== browserData.name.toLowerCase()) doesMatch = false;
-		else if (typeof browserData.minVersion == 'number' &&
-		         parseInt(self.version) < browserData.minVersion) doesMatch = false;
-		else if (typeof browserData.maxVersion == 'number' &&
-		         parseInt(self.version) > browserData.maxVersion) doesMatch = false;
-		else if (typeof browserData.version == 'number' &&
-		         parseInt(self.version) !== browserData.version) doesMatch = false;
-		else if (typeof browserData.Version == 'string' &&
-		         self.version !== browserData.version) doesMatch = false;
+    is._byBrowserData = function theBrowser_is_byBrowserData (browserData) {
+        if (  typeof browserData.name !== 'string'
+           || ( self.name.toLowerCase() !== browserData.name.toLowerCase()
+              )
+           || (  typeof browserData.minVersion == 'number'
+              && parseInt(self.version) < browserData.minVersion
+              )
+           || (  typeof browserData.maxVersion == 'number'
+              && parseInt(self.version) > browserData.maxVersion
+              )
+           || (  typeof browserData.version == 'number'
+              && parseInt(self.version) !== browserData.version
+              )
+           || (  typeof browserData.Version == 'string'
+              && self.version !== browserData.version
+              )
+           ) return false;
 
-		return doesMatch;
-	};
-
-
-
-	// Detect new IE versions
-	if (/trident/i.test(matches[1])) {
-		quickMatch = /\brv[ :]+([\d.]+)/g.exec(agent) || [];
-		self.name = 'Internet Explorer';
-		self.version = (quickMatch[1] || null);
-		return self;
-	}
-
-
-	// Detect Opera
-	if (/chrome/i.test(matches[1])) {
-		quickMatch = agent.match(/\bOPR\/([\d.]+)/);
-		if (quickMatch !== null) {
-			self.name = 'Opera';
-			self.version = quickMatch[1];
-			return self;
-		}
-	}
-
-
-	// Detect other browsers
-	if (matches[2]) {
-		self.name = matches[1];
-		self.version = matches[2];
-	}
-
-	// ...or fall back to navigator
-	else {
-		self.name = navigator.appName;
-		self.version = navigator.appVersion;
-	}
-
-	// Pull funny-style version
-	quickMatch = agent.match(/version\/([\d.]+)/i);
-	if (quickMatch) {
-		self.version = quickMatch[1];
-	}
-
-	// Handle old IE
-	if (/msie/i.test(self.name)) {
-		self.name = 'Internet Explorer';
-	}
+        else return true;
+        };
 
 
-	return self;
-}());
+    self._init = _init = function theBrowser_init () {
+        var quickMatch;
+        var agent = navigator.userAgent;
+
+
+        // Credits to http://stackoverflow.com/a/2401861/2816199 .
+        var matches = (  agent.match(/(opera|chrome|safari|firefox|msie|trident)[\/ ]*([\d.]+)/i)
+                      || []
+                      );
+
+
+        // Detect new IE versions.
+        if (/trident/i.test(matches[1])) {
+            quickMatch = /\brv[ :]+([\d.]+)/g.exec(agent) || [];
+            self.name = 'Internet Explorer';
+            self.version = (quickMatch[1] || null);
+            return self;
+            }
+
+
+        // Detect Opera.
+        if (/chrome/i.test(matches[1])) {
+            quickMatch = agent.match(/\bOPR\/([\d.]+)/);
+            if (quickMatch !== null) {
+                self.name = 'Opera';
+                self.version = quickMatch[1];
+                return self;
+                }
+            }
+
+
+        // Detect other browsers,
+        if (matches[2]) {
+            self.name = matches[1];
+            self.version = matches[2];
+            }
+
+        // …or fall back to navigator,
+        else {
+            self.name = navigator.appName;
+            self.version = navigator.appVersion;
+            }
+
+        // …then normalize the name for ancient versions of IE.
+        if (/msie/i.test(self.name)) {
+            self.name = 'Internet Explorer';
+            }
+
+
+        // Pull out the goofy-style version.
+        quickMatch = agent.match(/version\/([\d.]+)/i);
+        if (quickMatch) {
+            self.version = quickMatch[1];
+            }
+
+        return self;
+        };
+
+
+    return _init();
+    }(window.navigator));
+
+
+/* exported theBrowser */
