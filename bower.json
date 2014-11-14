@@ -2,21 +2,22 @@
 , "version": "0.3.0"
 , "authors":
   [ { "name": "Tomek Wiszniewski"
-    , "email": "<t.wiszniewski@studio-b12.de>"
+    , "email": "<t.wiszniewski@gmail.com>"
     }
   ]
 , "copyright": "Studio B12 GmbH 2014"
+, "license": "MIT"
 
-, "private": true
 , "repository":
   { "type": "git"
-  , "url": "git@git.sb12.de:js/lib/the-browser.git"
+  , "url": "git://github.com/studio-b12/the-browser.git"
   }
 
 , "main": "dist/the-browser.js"
 , "ignore":
   [ ".gitignore"
   , ".jshintrc"
+  , "package.json"
   ]
 , "dependencies": {}
 }
