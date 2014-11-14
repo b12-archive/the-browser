@@ -43,6 +43,10 @@ theBrowser.version;                         // This is the browser's version –
                                             // and dots.
 
 
+theBrowser.is('Chrome');                    // This will return true if the site is viewed with
+                                            // Google Chrome.
+
+
 theBrowser.is({ name: 'Internet Explorer'   // This will return true if the site is viewed with
               , version: '8.0'              // IE 8.0, otherwise false. `version` can also be an
               });                           // integer. Instead of `version` you can specify the
