@@ -135,6 +135,7 @@ gulp.task('manifest', function manifest () { 'use strict';
     // Get data straight from package.json
     [ 'name'
     , 'version'
+    , 'description'
     , 'main'
     , 'private'
     , 'repository'
