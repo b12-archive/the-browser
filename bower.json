@@ -1,23 +1,22 @@
 { "name": "the-browser"
 , "version": "0.3.0"
+, "main": "/dist/the-browser.js"
+, "repository":
+  { "type": "git"
+  , "url": "git://github.com/studio-b12/the-browser.git"
+  }
+, "copyright": "Studio B12 GmbH 2014"
+, "license": "MIT"
 , "authors":
   [ { "name": "Tomek Wiszniewski"
     , "email": "<t.wiszniewski@gmail.com>"
     }
   ]
-, "copyright": "Studio B12 GmbH 2014"
-, "license": "MIT"
-
-, "repository":
-  { "type": "git"
-  , "url": "git://github.com/studio-b12/the-browser.git"
-  }
-
-, "main": "dist/the-browser.js"
 , "ignore":
-  [ ".gitignore"
-  , ".jshintrc"
-  , "package.json"
+  [ "/src/"
+  , "/package.json"
+  , "/.jshintrc"
+  , "/.gitignore"
+  , "/gulpfile.js"
   ]
-, "dependencies": {}
 }

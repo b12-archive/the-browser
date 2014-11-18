@@ -144,5 +144,3 @@ var theBrowser = (function (navigator) { 'use strict';
 
 
 /* exported theBrowser */
-
-//# sourceMappingURL=sourcemaps/the-browser.js.map
