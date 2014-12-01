@@ -1,4 +1,8 @@
 { "browser": true
+, "globals":
+  { "define": false
+  , "module": false
+  }
 
 , "undef": true
 , "unused": true

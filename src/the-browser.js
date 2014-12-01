@@ -8,8 +8,8 @@
  */
 
 
-var theBrowser = (function (navigator, undefined) { 'use strict';
-    var is, _init;
+(function theBrowser (navigator, global, undefined) { 'use strict';
+    var theBrowser, is, _init;
     var self = {};
 
 
@@ -142,8 +142,17 @@ var theBrowser = (function (navigator, undefined) { 'use strict';
         };
 
 
-    return _init();
-    }(window.navigator));
+    // Export:
+    theBrowser = _init();
+
+    // - as an AMD module,
+    if (typeof define === 'function' && define.amd) define(function(){ return theBrowser; });
+    // - as a commonJS module,
+    else if (typeof module !== 'undefined' && module.exports) module.exports = theBrowser;
+    // - or as a global variable.
+    else global.theBrowser = theBrowser;
+
+    }(window.navigator, this));
 
 
 /* exported theBrowser */
