@@ -13,14 +13,16 @@ var theBrowser = (function (navigator) { 'use strict';
     var self = {};
 
 
-    self.is = is = function theBrowser_is () {
+    self.is = is = function is () {
+        var argument = arguments[0];
+
         /**
          * @function theBrowser.is
          * @param {Array} browserTable
          * @returns {Boolean}
          */
-        if (arguments[0] && arguments[0] instanceof Array) {
-            return is._byBrowserTable(arguments[0]);
+        if (argument instanceof Array) {
+            return is._byBrowserTable(argument);
             }
 
         /**
@@ -28,8 +30,8 @@ var theBrowser = (function (navigator) { 'use strict';
          * @param {String} browserName
          * @returns {Boolean}
          */
-        else if (typeof arguments[0] == 'string') {
-            return is._byBrowserName(arguments[0]);
+        else if (typeof argument == 'string') {
+            return is._byBrowserName(argument);
             }
 
         /**
@@ -37,31 +39,30 @@ var theBrowser = (function (navigator) { 'use strict';
          * @param {Object} browserData
          * @returns {Boolean}
          */
-        else if (typeof arguments[0] == 'object') {
-            return is._byBrowserData(arguments[0]);
+        else if (typeof argument == 'object') {
+            return is._byBrowserData(argument);
             }
 
         return false;
         };
 
-    is._byBrowserTable = function theBrowser_is_byBrowserTable (browserTable) {
+    is._byBrowserTable = function is_byBrowserTable (browserTable) {
         var browserData;
         while ((browserData = browserTable.pop())) {
-            if (self.is(browserData)) return true;
+            if (is(browserData)) return true;
             }
 
         return false;
         };
 
-    is._byBrowserName = function theBrowser_is_byBrowserName (browserName) {
+    is._byBrowserName = function is_byBrowserName (browserName) {
         if (browserName.toLowerCase() === self.name.toLowerCase()) return true;
         else return false;
         };
 
-    is._byBrowserData = function theBrowser_is_byBrowserData (browserData) {
+    is._byBrowserData = function is_byBrowserData (browserData) {
         if (  typeof browserData.name !== 'string'
-           || ( self.name.toLowerCase() !== browserData.name.toLowerCase()
-              )
+           || self.name.toLowerCase() !== browserData.name.toLowerCase()
            || (  typeof browserData.minVersion == 'number'
               && parseInt(self.version) < browserData.minVersion
               )
@@ -80,7 +81,7 @@ var theBrowser = (function (navigator) { 'use strict';
         };
 
 
-    self._init = _init = function theBrowser_init () {
+    self._init = _init = function _init (agent) {
         var quickMatch;
         var agent = navigator.userAgent;
 
@@ -95,7 +96,7 @@ var theBrowser = (function (navigator) { 'use strict';
         if (/trident/i.test(matches[1])) {
             quickMatch = /\brv[ :]+([\d.]+)/g.exec(agent) || [];
             self.name = 'Internet Explorer';
-            self.version = (quickMatch[1] || null);
+            self.version = quickMatch[1] || null;
             return self;
             }
 
