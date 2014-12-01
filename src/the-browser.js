@@ -8,7 +8,7 @@
  */
 
 
-var theBrowser = (function (navigator) { 'use strict';
+var theBrowser = (function (navigator, undefined) { 'use strict';
     var is, _init;
     var self = {};
 
@@ -83,7 +83,9 @@ var theBrowser = (function (navigator) { 'use strict';
 
     self._init = _init = function _init (agent) {
         var quickMatch;
-        var agent = navigator.userAgent;
+        if (!agent) agent = navigator.userAgent;
+
+        self.name = self.version = undefined;
 
 
         // Credits to http://stackoverflow.com/a/2401861/2816199 .
