@@ -1,4 +1,4 @@
-**This package is deprecated!** Please use [detect-browswer](https://github.com/DamonOehlman/detect-browser) instead.
+**This package is deprecated!** Please use [detect-browser](https://github.com/DamonOehlman/detect-browser) instead.
 
 ***
 
