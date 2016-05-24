@@ -1,3 +1,7 @@
+**This package is deprecated!** Please use [detect-browswer](https://github.com/DamonOehlman/detect-browser) instead.
+
+***
+
 the-browser.js
 ==============
 
